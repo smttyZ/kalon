@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.20)
 
-project(kalon VERSION 0.1 LANGUAGES CXX)
+project(kalon VERSION 0.1.0 LANGUAGES CXX)
 
 option(KALON_BUILD_TESTS "Build Kalon tests" ON)
 
@@ -20,6 +20,25 @@ file(
 target_sources(kalon INTERFACE ${KALON_HEADERS})
 
 target_compile_features(kalon INTERFACE cxx_std_20)
+
+# install rules
+install(
+        TARGETS kalon
+        EXPORT kalonTargets
+        INCLUDES DESTINATION include
+)
+
+install(
+        DIRECTORY include/
+        DESTINATION include
+)
+
+install(
+        EXPORT kalonTargets
+        FILE kalonConfig.cmake
+        NAMESPACE kalon::
+        DESTINATION lib/cmake/kalon
+)
 
 if(KALON_BUILD_TESTS)
     enable_testing()
