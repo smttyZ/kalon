@@ -261,7 +261,7 @@ public:
     }
 
     /// @brief Scalar multiplication with the scalar on the left-hand side
-    friend [[nodiscard]] Vector3 operator*(const Real& scalar, const Vector3& vec) {
+    [[nodiscard]] friend Vector3 operator*(const Real& scalar, const Vector3& vec) {
         return vec * scalar;
     }
 
