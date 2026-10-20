@@ -70,15 +70,38 @@ find_package(kalon REQUIRED)
 target_link_libraries(your_target PRIVATE kalon::kalon)
 ```
 
+## What "strongly typed" means here
+
+In kalon, strongly typed means that **values that share a representation but mean different things get different types**, so mixing them up is a *compile* error rather than a runtime surprise. Meters and seconds are both stored as `double`, but `meters + seconds` should not compile.
+
+`Real` already works this way relative to `double`:
+
+```cpp
+Real a = 5.0;          // ✗ does not compile: no implicit double -> Real
+Real b(5.0);           // ✓ explicit construction
+double d = b;          // ✗ does not compile: no implicit Real -> double
+double e = b.value();  // ✓ explicit
+```
+
+Units are not there yet. Today they are runtime string tags, so `meters + seconds` compiles and produces a vector tagged `"mixed units"` that you have to check for yourself. A typo (`"meter"` vs `"m"`) looks the same as a genuine mismatch.
+
+## Goals vs. today
+
+| Goal | Today | What's needed |
+|---|---|---|
+| **Strongly typed units:** dimension mismatches fail to compile | Runtime string tags; only additive combination; one string allocation per vector | Encode dimensions in the type system (compile-time units) |
+| **GPU workloads** | CPU only; every `Real` operation can throw, and GPU kernels can't throw | An error-reporting path that doesn't use exceptions |
+| **Fail loudly on bad math** | ✅ `Real` rejects NaN/±inf at construction and after every operation | — |
+
+### Known limitations
+
+- `Real`'s constructor accepts any arithmetic type, and C++ counts `bool` as arithmetic, so `Real(true)` compiles and equals `1.0`.
+- `Real` operations throw, which makes almost nothing in kalon `noexcept`.
+
 ## Design notes
 
 - **`Real` throws on non-finite results.** This trades raw speed for catching numerical bugs at their source. For research simulations, a wrong answer that looks plausible is worse than a crash.
-- **Units are tracked per vector.** Adding two `Vector3`s with different unit tags produces the tag `"mixed units"` rather than silently picking one. Units are currently runtime strings, and only additive combination is implemented.
-
-### Open design questions
-
-- **Compile-time units.** Moving unit tracking into the type system (so `meters + seconds` fails to compile) would make the library strongly typed in the full sense and remove the per-vector string allocation.
-- **An exception-free path.** GPU kernels can't throw. Supporting GPU workloads will need a variant of `Real` that reports errors another way (status flags, checked/unchecked modes, or similar).
+- **Unit tags combine conservatively.** Adding two `Vector3`s with different tags produces `"mixed units"` rather than silently picking one.
 
 ## License
 
