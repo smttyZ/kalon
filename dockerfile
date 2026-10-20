@@ -1,40 +1,32 @@
-# Set up ubuntu
+# Reproducible Linux build + test environment for kalon.
+#   docker build -t kalon .
+#   docker run --rm kalon            # runs the test suite
 FROM ubuntu:24.04
 
 LABEL maintainer="Henry Hicks"
 
-# Enviroment
 ENV DEBIAN_FRONTEND=noninteractive
 ENV CC=clang
 ENV CXX=clang++
 
-# Install dependencies
-RUN apt-get update && apt-get install -y \
-    build-essential \
-    clang \
-    cmake \
-    git \
-    ccache \
+# Toolchain + GoogleTest (Ubuntu 24.04's libgtest-dev ships prebuilt libs
+# and a CMake package config, so no manual gtest build is needed).
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        build-essential \
+        clang \
+        cmake \
+        ccache \
+        libgtest-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# gtest
-RUN apt-get update && apt-get install -y libgtest-dev && \
-    cd /usr/src/gtest && \
-    cmake . && make && mv lib/*.a /usr/lib
-
-# Create non-root user for builds
+# Non-root user for builds
 RUN useradd -ms /bin/bash kalon
 USER kalon
-WORKDIR /home/kalon
+WORKDIR /home/kalon/src
 
-# Copy sources
-COPY . /home/kalon
+COPY --chown=kalon:kalon . .
 
-# Configure + build
 RUN cmake -B build -DCMAKE_BUILD_TYPE=Release && \
-    cmake --build build -j$(nproc)
+    cmake --build build -j"$(nproc)"
 
-# Default command (can be overridden)
-CMD ["bash"]
-# To run tests, use:
-# CMD ["./build/tests/runTests"]
+CMD ["ctest", "--test-dir", "build", "--output-on-failure"]
