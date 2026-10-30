@@ -27,7 +27,7 @@ target_sources(kalon
             include/kalon/Vector4.hpp
 )
 
-target_compile_features(kalon INTERFACE cxx_std_20)
+target_compile_features(kalon INTERFACE cxx_std_23)
 
 # install rules
 install(

@@ -8,6 +8,9 @@
 
 using kalon::Real;
 
+// Real must stay usable in constant expressions (needs C++23 constexpr <cmath>).
+static_assert((Real(2.0) * Real(3.0)).value() == 6.0);
+
 TEST(Real, DefaultsToZero) {
     EXPECT_EQ(Real{}.value(), 0.0);
     EXPECT_EQ(Real::zero().value(), 0.0);
