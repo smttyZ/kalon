@@ -1,6 +1,6 @@
 # kalon
 
-A header-only C++20 math library for deterministic physics simulation. kalon is the math layer underneath the [Lambda Physics Engine](https://github.com/smttyZ/Lambda-Physics-Engine), which in turn powers [Project Lambda](https://github.com/smttyZ/Project-Lambda).
+A header-only C++23 math library for deterministic physics simulation. kalon is the math layer underneath the [Lambda Physics Engine](https://github.com/smttyZ/Lambda-Physics-Engine), which in turn powers [Project Lambda](https://github.com/smttyZ/Project-Lambda).
 
 The central idea is that **invalid numbers can't exist**. kalon's scalar type, `Real`, refuses to hold `NaN` or `±inf`. Any operation that would produce one throws immediately, at the exact line that caused it, instead of letting a bad value spread silently through thousands of simulation steps.
 
@@ -34,7 +34,7 @@ Real bad = Real(1.0) / Real(0.0); // throws std::domain_error
 
 ## Building and testing
 
-Requires CMake ≥ 3.23 and a C++20 compiler. Tested with GCC 13 and Clang 18. The tests also need [GoogleTest](https://github.com/google/googletest) (`libgtest-dev` on Ubuntu, `brew install googletest` on macOS).
+Requires CMake ≥ 3.23 and a C++23 compiler. Tested with Apple Clang 21 on macOS. The tests also need [GoogleTest](https://github.com/google/googletest) (`libgtest-dev` on Ubuntu, `brew install googletest` on macOS).
 
 ```sh
 cmake -B build
