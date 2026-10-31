@@ -17,6 +17,7 @@ target_sources(kalon
         BASE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/include
         FILES
             include/kalon/Constants.hpp
+            include/kalon/Dimension.hpp
             include/kalon/Matrix3.hpp
             include/kalon/Matrix4.hpp
             include/kalon/Quaternion.hpp
