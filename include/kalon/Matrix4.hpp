@@ -43,12 +43,22 @@ public:
     }
 
     void SetIdentity() noexcept {
-        _m = Storage{
-            Real::One(), Real::Zero(), Real::Zero(), Real::Zero(),
-            Real::Zero(), Real::One(), Real::Zero(), Real::Zero(),
-            Real::Zero(), Real::Zero(), Real::One(), Real::Zero(),
-            Real::Zero(), Real::Zero(), Real::Zero(), Real::One()
-        };
+        _m = Storage{Real::One(),
+                     Real::Zero(),
+                     Real::Zero(),
+                     Real::Zero(),
+                     Real::Zero(),
+                     Real::One(),
+                     Real::Zero(),
+                     Real::Zero(),
+                     Real::Zero(),
+                     Real::Zero(),
+                     Real::One(),
+                     Real::Zero(),
+                     Real::Zero(),
+                     Real::Zero(),
+                     Real::Zero(),
+                     Real::One()};
     }
 
     /// @brief TODO: implement multiplication, inversion, projection helpers.

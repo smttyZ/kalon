@@ -45,11 +45,15 @@ public:
 
     /// @brief Reset to identity.
     void SetIdentity() noexcept {
-        _m = Storage{
-            Real::One(), Real::Zero(), Real::Zero(),
-            Real::Zero(), Real::One(), Real::Zero(),
-            Real::Zero(), Real::Zero(), Real::One()
-        };
+        _m = Storage{Real::One(),
+                     Real::Zero(),
+                     Real::Zero(),
+                     Real::Zero(),
+                     Real::One(),
+                     Real::Zero(),
+                     Real::Zero(),
+                     Real::Zero(),
+                     Real::One()};
     }
 
     /// @brief TODO: determinants, inverses, basis transforms.

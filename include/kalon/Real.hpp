@@ -13,24 +13,23 @@
 
 #pragma once
 
-#include <type_traits>
-#include <stdexcept>
 #include <cmath>
 #include <limits>
+#include <stdexcept>
+#include <type_traits>
 
 namespace kalon {
 
 class Real final {
 private:
     double _value;
-    
+
     // Internal finite check helper
     static constexpr bool isFinite(double v) noexcept {
         return std::isfinite(v);
     }
 
 public:
-
     /**
      * Default constructor initializes the Real number to zero.
      */
@@ -48,28 +47,33 @@ public:
     }
 
     // operators
-        [[nodiscard]] constexpr Real operator+(const Real& rhs) const {
+    [[nodiscard]] constexpr Real operator+(const Real& rhs) const {
         double result = _value + rhs._value;
-        if (!isFinite(result)) throw std::domain_error("Real addition produced non-finite result");
+        if (!isFinite(result))
+            throw std::domain_error("Real addition produced non-finite result");
         return Real(result);
     }
 
     [[nodiscard]] constexpr Real operator-(const Real& rhs) const {
         double result = _value - rhs._value;
-        if (!isFinite(result)) throw std::domain_error("Real subtraction produced non-finite result");
+        if (!isFinite(result))
+            throw std::domain_error("Real subtraction produced non-finite result");
         return Real(result);
     }
 
     [[nodiscard]] constexpr Real operator*(const Real& rhs) const {
         double result = _value * rhs._value;
-        if (!isFinite(result)) throw std::domain_error("Real multiplication produced non-finite result");
+        if (!isFinite(result))
+            throw std::domain_error("Real multiplication produced non-finite result");
         return Real(result);
     }
 
     [[nodiscard]] constexpr Real operator/(const Real& rhs) const {
-        if (rhs._value == 0.0) throw std::domain_error("Real: division by zero");
+        if (rhs._value == 0.0)
+            throw std::domain_error("Real: division by zero");
         double result = _value / rhs._value;
-        if (!isFinite(result)) throw std::domain_error("Real division produced non-finite result");
+        if (!isFinite(result))
+            throw std::domain_error("Real division produced non-finite result");
         return Real(result);
     }
 
@@ -98,14 +102,15 @@ public:
         return Real(std::numeric_limits<double>::epsilon());
     }
 
-    static constexpr Real Zero() noexcept { return Real(0.0); }
-    static constexpr Real One() noexcept { return Real(1.0); }
-
-
-
+    static constexpr Real Zero() noexcept {
+        return Real(0.0);
+    }
+    static constexpr Real One() noexcept {
+        return Real(1.0);
+    }
 };
 
-}
+} // namespace kalon
 
 // Template definitions (STYLEGUIDE.md section 2).
 #include "Real.ipp"

@@ -19,7 +19,7 @@ namespace kalon {
 
 /**
  * @brief Lightweight 2D vector stub.
- * 
+ *
  * This type mirrors the structure of Vector3 but keeps the implementation
  * intentionally minimal so additional operations can be layered on later.
  */
@@ -32,11 +32,19 @@ public:
     Vector2() = default;
     Vector2(const Real& x, const Real& y) : _x(x), _y(y) {}
 
-    [[nodiscard]] Real X() const noexcept { return _x; }
-    [[nodiscard]] Real Y() const noexcept { return _y; }
+    [[nodiscard]] Real X() const noexcept {
+        return _x;
+    }
+    [[nodiscard]] Real Y() const noexcept {
+        return _y;
+    }
 
-    void SetX(const Real& x) noexcept { _x = x; }
-    void SetY(const Real& y) noexcept { _y = y; }
+    void SetX(const Real& x) noexcept {
+        _x = x;
+    }
+    void SetY(const Real& y) noexcept {
+        _y = y;
+    }
     void SetComponents(const Real& x, const Real& y) noexcept {
         _x = x;
         _y = y;

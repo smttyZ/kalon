@@ -35,11 +35,12 @@ private:
 
 public:
     Quaternion() = default;
-    Quaternion(const Real& w, const Real& x, const Real& y, const Real& z)
-        : _w(w), _x(x), _y(y), _z(z) {}
+    Quaternion(const Real& w, const Real& x, const Real& y, const Real& z) : _w(w), _x(x), _y(y), _z(z) {}
 
     /// @brief The identity rotation.
-    [[nodiscard]] static Quaternion Identity() noexcept { return Quaternion{}; }
+    [[nodiscard]] static Quaternion Identity() noexcept {
+        return Quaternion{};
+    }
 
     /// @brief Rotation of `angleRadians` about `axis` (axis is normalized internally).
     [[nodiscard]] static Quaternion FromAxisAngle(const Vector3& axis, const Real& angleRadians) {
@@ -49,10 +50,18 @@ public:
         return Quaternion(Real(std::cos(HALF)), N.X() * S, N.Y() * S, N.Z() * S);
     }
 
-    [[nodiscard]] Real W() const noexcept { return _w; }
-    [[nodiscard]] Real X() const noexcept { return _x; }
-    [[nodiscard]] Real Y() const noexcept { return _y; }
-    [[nodiscard]] Real Z() const noexcept { return _z; }
+    [[nodiscard]] Real W() const noexcept {
+        return _w;
+    }
+    [[nodiscard]] Real X() const noexcept {
+        return _x;
+    }
+    [[nodiscard]] Real Y() const noexcept {
+        return _y;
+    }
+    [[nodiscard]] Real Z() const noexcept {
+        return _z;
+    }
 
     void Set(const Real& w, const Real& x, const Real& y, const Real& z) noexcept {
         _w = w;
@@ -81,7 +90,9 @@ public:
     }
 
     /// @brief Normalize in place (no-op for a zero quaternion).
-    void Normalize() { *this = Normalized(); }
+    void Normalize() {
+        *this = Normalized();
+    }
 
     /// @brief Conjugate (w, -x, -y, -z). Equals the inverse for unit quaternions.
     [[nodiscard]] Quaternion Conjugate() const {
@@ -90,12 +101,10 @@ public:
 
     /// @brief Hamilton product. `a * b` applies rotation b first, then a.
     [[nodiscard]] Quaternion operator*(const Quaternion& rhs) const {
-        return Quaternion(
-            _w * rhs._w - _x * rhs._x - _y * rhs._y - _z * rhs._z,
-            _w * rhs._x + _x * rhs._w + _y * rhs._z - _z * rhs._y,
-            _w * rhs._y - _x * rhs._z + _y * rhs._w + _z * rhs._x,
-            _w * rhs._z + _x * rhs._y - _y * rhs._x + _z * rhs._w
-        );
+        return Quaternion(_w * rhs._w - _x * rhs._x - _y * rhs._y - _z * rhs._z,
+                          _w * rhs._x + _x * rhs._w + _y * rhs._z - _z * rhs._y,
+                          _w * rhs._y - _x * rhs._z + _y * rhs._w + _z * rhs._x,
+                          _w * rhs._z + _x * rhs._y - _y * rhs._x + _z * rhs._w);
     }
 
     /// @brief Rotate a vector by this (unit) quaternion: q * v * q^-1.

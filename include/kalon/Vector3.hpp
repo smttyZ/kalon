@@ -27,7 +27,7 @@
 #include <kalon/Real.hpp>
 
 namespace kalon {
-    
+
 struct Vector3 {
     // TODO(Henry): `_normalized` flag may become stale after scalar ops; consider resetting it in operator*= and operator/=.
     // TODO(Henry): Cross-product currently uses additive unit combination; should use multiplicative logic when available.
@@ -45,7 +45,7 @@ private:
 
     /// @brief Tracks whether the cached magnitude is valid
     mutable bool _magnitudeCacheValid = false;
-    
+
     /// @brief SI unit tag (e.g., "m", "m/s")
     std::string _unit = "dimensionless";
 
@@ -150,7 +150,8 @@ public:
     /// @returns A new Vector3 that is the normalized version of this vector
     [[nodiscard]] Vector3 Normalized() const {
         Real len = Magnitude();
-        if (len == Real::Zero()) return *this;
+        if (len == Real::Zero())
+            return *this;
         Vector3 result(_x / len, _y / len, _z / len);
         result._normalized = true;
         result._unit = _unit;
@@ -180,11 +181,7 @@ public:
 
     /// @brief Compute the cross product with another vector
     [[nodiscard]] Vector3 Cross(const Vector3& rhs) const {
-        Vector3 result(
-            _y * rhs._z - _z * rhs._y,
-            _z * rhs._x - _x * rhs._z,
-            _x * rhs._y - _y * rhs._x
-        );
+        Vector3 result(_y * rhs._z - _z * rhs._y, _z * rhs._x - _x * rhs._z, _x * rhs._y - _y * rhs._x);
         result._unit = combineAdditiveUnits(_unit, rhs._unit);
         return result;
     }
@@ -276,9 +273,6 @@ public:
     [[nodiscard]] friend Vector3 operator*(const Real& scalar, const Vector3& vec) {
         return vec * scalar;
     }
-
-
-
 };
-    
+
 } // namespace kalon

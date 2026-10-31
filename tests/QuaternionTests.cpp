@@ -26,7 +26,9 @@ using kalon::Vector3;
 namespace {
 constexpr double kPi = std::numbers::pi;
 
-Vector3 v(double x, double y, double z) { return Vector3(Real(x), Real(y), Real(z)); }
+Vector3 v(double x, double y, double z) {
+    return Vector3(Real(x), Real(y), Real(z));
+}
 
 void ExpectNear(const Vector3& a, double x, double y, double z, double tol = 1e-12) {
     EXPECT_NEAR(a.X().Value(), x, tol);
