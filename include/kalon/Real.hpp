@@ -40,11 +40,7 @@ public:
      * Constructor that initializes the Real number from any arithmetic type.
      */
     template <typename T, typename = std::enable_if_t<std::is_arithmetic_v<T>>>
-    constexpr explicit Real(T v) : _value(static_cast<double>(v)) {
-        if (!isFinite(_value)) {
-            throw std::domain_error("Real: value must be finite");
-        }
-    }
+    constexpr explicit Real(T v); // defined in Real.ipp
 
     /// @brief Accessor
     [[nodiscard]] constexpr double Value() const {
@@ -110,3 +106,6 @@ public:
 };
 
 }
+
+// Template definitions (STYLEGUIDE.md section 2).
+#include "Real.ipp"

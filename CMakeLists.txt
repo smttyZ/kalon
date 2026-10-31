@@ -21,6 +21,7 @@ target_sources(kalon
             include/kalon/Matrix4.hpp
             include/kalon/Quaternion.hpp
             include/kalon/Real.hpp
+            include/kalon/Real.ipp
             include/kalon/Transform.hpp
             include/kalon/Vector2.hpp
             include/kalon/Vector3.hpp
