@@ -48,8 +48,8 @@ IncludeCategories:
   - Regex: '.*'
     Priority: 5
 Cpp11BracedListStyle: true
-NamespaceIndentation: All
-ReflowComments: false
+NamespaceIndentation: None
+ReflowComments: IndentOnly
 SortUsingDeclarations: true
 SpacesInAngles: false
 SpaceBeforeRangeBasedForLoopColon: true
