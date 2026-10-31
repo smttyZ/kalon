@@ -48,7 +48,7 @@ IncludeCategories:
   - Regex: '.*'
     Priority: 5
 Cpp11BracedListStyle: true
-NamespaceIndentation: None
+NamespaceIndentation: All
 ReflowComments: IndentOnly
 SortUsingDeclarations: true
 SpacesInAngles: false
