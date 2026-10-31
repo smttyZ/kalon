@@ -42,6 +42,18 @@ TEST(Dimension, AliasesAreDistinctTypes) {
     SUCCEED();  // the static_asserts above are the test
 }
 
+// ---- DONE: construction and the getter --------------------------------------------------
+// The constructor is explicit: brace-init from a Real works, but "=" from a Real (and
+// passing a bare Real where a Length is expected) must not.
+static_assert(std::is_constructible_v<Length, Real>);
+static_assert(!std::is_convertible_v<Real, Length>);
+static_assert(!std::is_convertible_v<Real, Mass>);
+
+TEST(Dimension, StoresAndReturnsValue) {
+    const Length l{Real(3.0)};  // const: the getter must be callable on a const object
+    EXPECT_EQ(l.Value(), Real(3.0));
+}
+
 // ---- STEP: same-dimension + and - ----------------------------------------------------
 // The positive twin matters: without it, "Length + Time does not compile" also passes
 // when no operator + exists at all.
