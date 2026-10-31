@@ -43,10 +43,10 @@ public:
 
     /// @brief Rotation of `angleRadians` about `axis` (axis is normalized internally).
     [[nodiscard]] static Quaternion FromAxisAngle(const Vector3& axis, const Real& angleRadians) {
-        const Vector3 n = axis.Normalized();
-        const double half = angleRadians.Value() * 0.5;
-        const Real s(std::sin(half));
-        return Quaternion(Real(std::cos(half)), n.X() * s, n.Y() * s, n.Z() * s);
+        const Vector3 N = axis.Normalized();
+        const double HALF = angleRadians.Value() * 0.5;
+        const Real S(std::sin(HALF));
+        return Quaternion(Real(std::cos(HALF)), N.X() * S, N.Y() * S, N.Z() * S);
     }
 
     [[nodiscard]] Real W() const noexcept { return _w; }
@@ -74,9 +74,10 @@ public:
     /// @brief Unit-length copy. A zero quaternion is returned unchanged,
     ///        matching Vector3::Normalized().
     [[nodiscard]] Quaternion Normalized() const {
-        const Real len = Magnitude();
-        if (len == Real::Zero()) return *this;
-        return Quaternion(_w / len, _x / len, _y / len, _z / len);
+        const Real LEN = Magnitude();
+        if (LEN == Real::Zero())
+            return *this;
+        return Quaternion(_w / LEN, _x / LEN, _y / LEN, _z / LEN);
     }
 
     /// @brief Normalize in place (no-op for a zero quaternion).
@@ -100,9 +101,9 @@ public:
     /// @brief Rotate a vector by this (unit) quaternion: q * v * q^-1.
     ///        The vector's unit tag is preserved.
     [[nodiscard]] Vector3 Rotate(const Vector3& v) const {
-        const Quaternion p(Real::Zero(), v.X(), v.Y(), v.Z());
-        const Quaternion r = (*this) * p * Conjugate();
-        Vector3 out(r._x, r._y, r._z);
+        const Quaternion P(Real::Zero(), v.X(), v.Y(), v.Z());
+        const Quaternion R = (*this) * P * Conjugate();
+        Vector3 out(R._x, R._y, R._z);
         out.SetUnit(v.Unit());
         return out;
     }
