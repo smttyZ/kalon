@@ -4,3 +4,6 @@
 
 # Format kalon with clang-format
 566b28413142768712793be916679317d759affd
+
+# Reformat kalon with namespace indentation
+3979196cd6f6263b0f9545c8ae2486c62806f0ea
