@@ -29,7 +29,7 @@ private:
     bool _normalized = false;
 
     /// @brief Mangnitude cache for expensive recalcs
-    mutable Real _magnitudeCache = Real::zero();
+    mutable Real _magnitudeCache = Real::Zero();
 
     /// @brief Tracks whether the cached magnitude is valid
     mutable bool _magnitudeCacheValid = false;
@@ -38,55 +38,55 @@ private:
     std::string _unit = "dimensionless";
 
     /// @brief Marker used when combining incompatible units
-    static constexpr const char* kInconsistentUnits = "mixed units";
+    static constexpr const char* INCONSISTENT_UNITS = "mixed units";
 
     /// @brief Combine units for additive operations, returns a stub if they differ
     [[nodiscard]] static std::string combineAdditiveUnits(const std::string& lhs, const std::string& rhs) {
-        return lhs == rhs ? lhs : std::string(kInconsistentUnits);
+        return lhs == rhs ? lhs : std::string(INCONSISTENT_UNITS);
     }
 
 public:
     /// @brief Default constructor initializes the vector to (0, 0, 0)
-    Vector3() : _x(Real::zero()), _y(Real::zero()), _z(Real::zero()) {}
+    Vector3() : _x(Real::Zero()), _y(Real::Zero()), _z(Real::Zero()) {}
 
     /// @brief Constructor that initializes the vector with given x, y, z components
     Vector3(const Real& x, const Real& y, const Real& z) : _x(x), _y(y), _z(z) {}
 
     /// @brief Accessor for x component
-    [[nodiscard]] Real x() const noexcept {
+    [[nodiscard]] Real X() const noexcept {
         return _x;
     }
 
     /// @brief Accessor for y component
-    [[nodiscard]] Real y() const noexcept {
+    [[nodiscard]] Real Y() const noexcept {
         return _y;
     }
 
     /// @brief Accessor for z component
-    [[nodiscard]] Real z() const noexcept {
+    [[nodiscard]] Real Z() const noexcept {
         return _z;
     }
 
     /// @brief Mutator for x component
-    void setX(const Real& x) noexcept {
+    void SetX(const Real& x) noexcept {
         _x = x;
         InvalidateCache();
     }
 
     /// @brief Mutator for y component
-    void setY(const Real& y) noexcept {
+    void SetY(const Real& y) noexcept {
         _y = y;
         InvalidateCache();
     }
 
     /// @brief Mutator for z component
-    void setZ(const Real& z) noexcept {
+    void SetZ(const Real& z) noexcept {
         _z = z;
         InvalidateCache();
     }
 
     /// @brief Set all vector components at once
-    void setComponents(const Real& x, const Real& y, const Real& z) noexcept {
+    void SetComponents(const Real& x, const Real& y, const Real& z) noexcept {
         _x = x;
         _y = y;
         _z = z;
@@ -96,24 +96,24 @@ public:
     // meta data accessors
     /// @brief Check if the vector is normalized
     /// @returns True if the vector is normalized, false otherwise
-    [[nodiscard]] bool isNormalized() const noexcept {
+    [[nodiscard]] bool IsNormalized() const noexcept {
         return _normalized;
     }
 
     /// @brief Get the unit of the vector
     /// @returns The SI unit tag as a string
-    [[nodiscard]] const std::string& unit() const noexcept {
+    [[nodiscard]] const std::string& Unit() const noexcept {
         return _unit;
     }
 
     /// @brief Set the unit of the vector (stores an owned copy)
-    void setUnit(std::string_view unit) {
+    void SetUnit(std::string_view unit) {
         _unit.assign(unit.begin(), unit.end());
     }
 
     /// @brief Invalidate the cached magnitude and normalized flag
     void InvalidateCache() noexcept {
-        _magnitudeCache = Real::zero();
+        _magnitudeCache = Real::Zero();
         _magnitudeCacheValid = false;
         _normalized = false;
     }
@@ -123,7 +123,7 @@ public:
     [[nodiscard]] Real Magnitude() const {
         if (!_magnitudeCacheValid) {
             Real magSquared = MagnitudeSquared();
-            _magnitudeCache = Real(std::sqrt(magSquared.value()));
+            _magnitudeCache = Real(std::sqrt(magSquared.Value()));
             _magnitudeCacheValid = true;
         }
         return _magnitudeCache;
@@ -138,11 +138,11 @@ public:
     /// @returns A new Vector3 that is the normalized version of this vector
     [[nodiscard]] Vector3 Normalized() const {
         Real len = Magnitude();
-        if (len == Real::zero()) return *this;
+        if (len == Real::Zero()) return *this;
         Vector3 result(_x / len, _y / len, _z / len);
         result._normalized = true;
         result._unit = _unit;
-        result._magnitudeCache = Real::one();
+        result._magnitudeCache = Real::One();
         result._magnitudeCacheValid = true;
         return result;
     }
@@ -150,14 +150,14 @@ public:
     /// @brief Normalize the vector in-place if it has non-zero length
     void Normalize() {
         Real len = Magnitude();
-        if (len == Real::zero()) {
+        if (len == Real::Zero()) {
             return;
         }
         _x = _x / len;
         _y = _y / len;
         _z = _z / len;
         _normalized = true;
-        _magnitudeCache = Real::one();
+        _magnitudeCache = Real::One();
         _magnitudeCacheValid = true;
     }
 

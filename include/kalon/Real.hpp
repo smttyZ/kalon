@@ -34,7 +34,7 @@ public:
     }
 
     /// @brief Accessor
-    [[nodiscard]] constexpr double value() const {
+    [[nodiscard]] constexpr double Value() const {
         return _value;
     }
 
@@ -85,12 +85,12 @@ public:
     }
 
     // util
-    static constexpr Real epsilon() noexcept {
+    static constexpr Real Epsilon() noexcept {
         return Real(std::numeric_limits<double>::epsilon());
     }
 
-    static constexpr Real zero() noexcept { return Real(0.0); }
-    static constexpr Real one() noexcept { return Real(1.0); }
+    static constexpr Real Zero() noexcept { return Real(0.0); }
+    static constexpr Real One() noexcept { return Real(1.0); }
 
 
 

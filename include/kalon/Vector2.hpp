@@ -12,19 +12,19 @@ namespace kalon {
  */
 struct Vector2 {
 private:
-    Real _x{Real::zero()};
-    Real _y{Real::zero()};
+    Real _x{Real::Zero()};
+    Real _y{Real::Zero()};
 
 public:
     Vector2() = default;
     Vector2(const Real& x, const Real& y) : _x(x), _y(y) {}
 
-    [[nodiscard]] Real x() const noexcept { return _x; }
-    [[nodiscard]] Real y() const noexcept { return _y; }
+    [[nodiscard]] Real X() const noexcept { return _x; }
+    [[nodiscard]] Real Y() const noexcept { return _y; }
 
-    void setX(const Real& x) noexcept { _x = x; }
-    void setY(const Real& y) noexcept { _y = y; }
-    void setComponents(const Real& x, const Real& y) noexcept {
+    void SetX(const Real& x) noexcept { _x = x; }
+    void SetY(const Real& y) noexcept { _y = y; }
+    void SetComponents(const Real& x, const Real& y) noexcept {
         _x = x;
         _y = y;
     }

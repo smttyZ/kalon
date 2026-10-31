@@ -29,12 +29,12 @@ public:
         return _m[r * 4 + c];
     }
 
-    void setIdentity() noexcept {
+    void SetIdentity() noexcept {
         _m = Storage{
-            Real::one(), Real::zero(), Real::zero(), Real::zero(),
-            Real::zero(), Real::one(), Real::zero(), Real::zero(),
-            Real::zero(), Real::zero(), Real::one(), Real::zero(),
-            Real::zero(), Real::zero(), Real::zero(), Real::one()
+            Real::One(), Real::Zero(), Real::Zero(), Real::Zero(),
+            Real::Zero(), Real::One(), Real::Zero(), Real::Zero(),
+            Real::Zero(), Real::Zero(), Real::One(), Real::Zero(),
+            Real::Zero(), Real::Zero(), Real::Zero(), Real::One()
         };
     }
 

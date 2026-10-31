@@ -12,17 +12,17 @@ namespace {
 Vector3 v(double x, double y, double z) { return Vector3(Real(x), Real(y), Real(z)); }
 
 void ExpectNear(const Vector3& a, double x, double y, double z, double tol = 1e-12) {
-    EXPECT_NEAR(a.x().value(), x, tol);
-    EXPECT_NEAR(a.y().value(), y, tol);
-    EXPECT_NEAR(a.z().value(), z, tol);
+    EXPECT_NEAR(a.X().Value(), x, tol);
+    EXPECT_NEAR(a.Y().Value(), y, tol);
+    EXPECT_NEAR(a.Z().Value(), z, tol);
 }
 } // namespace
 
 TEST(Vector3, DefaultsToZeroAndDimensionless) {
     const Vector3 z;
     ExpectNear(z, 0, 0, 0);
-    EXPECT_EQ(z.unit(), "dimensionless");
-    EXPECT_FALSE(z.isNormalized());
+    EXPECT_EQ(z.Unit(), "dimensionless");
+    EXPECT_FALSE(z.IsNormalized());
 }
 
 TEST(Vector3, AddSubtractScale) {
@@ -35,59 +35,59 @@ TEST(Vector3, AddSubtractScale) {
 }
 
 TEST(Vector3, DotAndCross) {
-    EXPECT_EQ(v(1, 2, 3).Dot(v(4, 5, 6)).value(), 32.0);
+    EXPECT_EQ(v(1, 2, 3).Dot(v(4, 5, 6)).Value(), 32.0);
     ExpectNear(v(1, 0, 0).Cross(v(0, 1, 0)), 0, 0, 1);  // x × y = z
     ExpectNear(v(0, 1, 0).Cross(v(1, 0, 0)), 0, 0, -1); // anti-commutative
 }
 
 TEST(Vector3, MagnitudeAndCache) {
     Vector3 a = v(3, 4, 0);
-    EXPECT_EQ(a.MagnitudeSquared().value(), 25.0);
-    EXPECT_EQ(a.Magnitude().value(), 5.0);
-    a.setX(Real(0.0)); // mutation must invalidate the cached magnitude
-    EXPECT_EQ(a.Magnitude().value(), 4.0);
+    EXPECT_EQ(a.MagnitudeSquared().Value(), 25.0);
+    EXPECT_EQ(a.Magnitude().Value(), 5.0);
+    a.SetX(Real(0.0)); // mutation must invalidate the cached magnitude
+    EXPECT_EQ(a.Magnitude().Value(), 4.0);
 }
 
 TEST(Vector3, NormalizeTracksFlag) {
     const Vector3 n = v(3, 4, 0).Normalized();
     ExpectNear(n, 0.6, 0.8, 0.0);
-    EXPECT_TRUE(n.isNormalized());
-    EXPECT_EQ(n.Magnitude().value(), 1.0);
+    EXPECT_TRUE(n.IsNormalized());
+    EXPECT_EQ(n.Magnitude().Value(), 1.0);
 
     Vector3 m = v(0, 0, 2);
     m.Normalize();
     ExpectNear(m, 0, 0, 1);
-    EXPECT_TRUE(m.isNormalized());
+    EXPECT_TRUE(m.IsNormalized());
 
     m *= Real(3.0); // scaling must clear the normalized flag
-    EXPECT_FALSE(m.isNormalized());
+    EXPECT_FALSE(m.IsNormalized());
 }
 
 TEST(Vector3, NormalizingZeroIsANoOp) {
     const Vector3 z;
     ExpectNear(z.Normalized(), 0, 0, 0);
-    EXPECT_FALSE(z.Normalized().isNormalized());
+    EXPECT_FALSE(z.Normalized().IsNormalized());
 }
 
 TEST(Vector3, UnitTagsCombineAdditively) {
     Vector3 a = v(1, 0, 0);
     Vector3 b = v(0, 1, 0);
-    a.setUnit("m");
-    b.setUnit("m");
-    EXPECT_EQ((a + b).unit(), "m");
+    a.SetUnit("m");
+    b.SetUnit("m");
+    EXPECT_EQ((a + b).Unit(), "m");
 
-    b.setUnit("s");
-    EXPECT_EQ((a + b).unit(), "mixed units");
+    b.SetUnit("s");
+    EXPECT_EQ((a + b).Unit(), "mixed units");
 }
 
 TEST(Vector3, EqualityIncludesUnit) {
     Vector3 a = v(1, 2, 3);
     Vector3 b = v(1, 2, 3);
     EXPECT_EQ(a, b);
-    b.setUnit("m");
+    b.SetUnit("m");
     EXPECT_NE(a, b);
 }
 
 TEST(Vector3, DivideByZeroThrows) {
-    EXPECT_THROW(static_cast<void>(v(1, 2, 3) / Real::zero()), std::domain_error);
+    EXPECT_THROW(static_cast<void>(v(1, 2, 3) / Real::Zero()), std::domain_error);
 }
