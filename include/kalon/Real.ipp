@@ -15,13 +15,13 @@
 
 namespace kalon {
 
-// Out-of-class definition of a member template: the template head is repeated without
-// its default argument, and `explicit` stays on the declaration in Real.hpp only.
-template <typename T, typename>
-constexpr Real::Real(T v) : _value(static_cast<double>(v)) {
-    if (!isFinite(_value)) {
-        throw std::domain_error("Real: value must be finite");
+    // Out-of-class definition of a member template: the template head is repeated without
+    // its default argument, and `explicit` stays on the declaration in Real.hpp only.
+    template <typename T, typename>
+    constexpr Real::Real(T v) : _value(static_cast<double>(v)) {
+        if (!isFinite(_value)) {
+            throw std::domain_error("Real: value must be finite");
+        }
     }
-}
 
 } // namespace kalon

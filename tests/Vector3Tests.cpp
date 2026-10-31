@@ -22,15 +22,15 @@ using kalon::Real;
 using kalon::Vector3;
 
 namespace {
-Vector3 v(double x, double y, double z) {
-    return Vector3(Real(x), Real(y), Real(z));
-}
+    Vector3 v(double x, double y, double z) {
+        return Vector3(Real(x), Real(y), Real(z));
+    }
 
-void ExpectNear(const Vector3& a, double x, double y, double z, double tol = 1e-12) {
-    EXPECT_NEAR(a.X().Value(), x, tol);
-    EXPECT_NEAR(a.Y().Value(), y, tol);
-    EXPECT_NEAR(a.Z().Value(), z, tol);
-}
+    void ExpectNear(const Vector3& a, double x, double y, double z, double tol = 1e-12) {
+        EXPECT_NEAR(a.X().Value(), x, tol);
+        EXPECT_NEAR(a.Y().Value(), y, tol);
+        EXPECT_NEAR(a.Z().Value(), z, tol);
+    }
 } // namespace
 
 TEST(Vector3, DefaultsToZeroAndDimensionless) {
