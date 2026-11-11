@@ -63,6 +63,28 @@ public:
      * @return Difference of both quantities.
      */
     [[nodiscard]] constexpr Dimension operator-(const Dimension& rhs) const;
+
+    /**
+     * @brief Multiplies two quantities; their dimension exponents add.
+     * @tparam L2 Length exponent of the right-hand side.
+     * @tparam M2 Mass exponent of the right-hand side.
+     * @tparam T2 Time exponent of the right-hand side.
+     * @param rhs Quantity to multiply by.
+     * @return Product, with dimension (L+L2, M+M2, T+T2).
+     */
+    template <typename L2, typename M2, typename T2>
+    [[nodiscard]] constexpr auto operator*(const Dimension<L2, M2, T2>& rhs) const;
+
+    /**
+     * @brief Divides two quantities; their dimension exponents subtract.
+     * @tparam L2 Length exponent of the right-hand side.
+     * @tparam M2 Mass exponent of the right-hand side.
+     * @tparam T2 Time exponent of the right-hand side.
+     * @param rhs Quantity to divide by.
+     * @return Quotient, with dimension (L-L2, M-M2, T-T2).
+     */
+    template <typename L2, typename M2, typename T2>
+    [[nodiscard]] constexpr auto operator/(const Dimension<L2, M2, T2>& rhs) const;
 };
 
 /// @brief Length (L^1)
@@ -77,6 +99,8 @@ using Velocity     = Dimension<Q<1>, Q<0>, Q<-1>>;
 using Acceleration = Dimension<Q<1>, Q<0>, Q<-2>>;
 /// @brief Force (L^1 M^1 T^-2)
 using Force        = Dimension<Q<1>, Q<1>, Q<-2>>;
+/// @brief Dimensionless quantity (L^0 M^0 T^0), such as a ratio, coefficient, or scale factor
+using Dimensionless = Dimension<Q<0>, Q<0>, Q<0>>;
 } // namespace kalon
 
 // Template definitions (STYLEGUIDE.md section 2).

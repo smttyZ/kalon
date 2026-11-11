@@ -72,13 +72,25 @@ TEST(Dimension, SameDimensionAdditionAndSubtraction) {
 }
 
 // ---- STEP: * and / add and subtract exponents ----------------------------------------
-// static_assert(std::is_same_v<quotient_t<Length, Time>, Velocity>);
-// static_assert(std::is_same_v<quotient_t<Velocity, Time>, Acceleration>);
-// static_assert(std::is_same_v<product_t<Mass, Acceleration>, Force>);
-//
-// With ratio exponents these only hold if the computed exponents come out normalized,
-// so this block also checks that. Open design question for you: what is the type of
-// quotient_t<Length, Length>? A Dimension with all-zero exponents, or a plain Real?
+static_assert(std::is_same_v<quotient_t<Length, Time>, Velocity>);
+static_assert(std::is_same_v<quotient_t<Velocity, Time>, Acceleration>);
+static_assert(std::is_same_v<product_t<Mass, Acceleration>, Force>);
+static_assert(std::is_same_v<quotient_t<Length, Length>, Dimensionless>);
+
+TEST(Dimension, MultiplicationAndDivision) {
+    const Mass m{Real(2.0)};
+    const Acceleration a{Real(3.0)};
+    const Force f = m * a;
+    EXPECT_EQ(f.Value(), Real(6.0));
+
+    const Length d{Real(10.0)};
+    const Time t{Real(2.0)};
+    const Velocity v = d / t;
+    EXPECT_EQ(v.Value(), Real(5.0));
+
+    const Dimensionless ratio = d / d;
+    EXPECT_EQ(ratio.Value(), Real(1.0));
+}
 
 // ---- STEP: unnormalized ratios ---------------------------------------------------------
 // std::ratio<2,4> and std::ratio<1,2> are different types. Decide what happens if
