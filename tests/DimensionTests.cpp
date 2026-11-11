@@ -57,12 +57,19 @@ TEST(Dimension, StoresAndReturnsValue) {
 // ---- STEP: same-dimension + and - ----------------------------------------------------
 // The positive twin matters: without it, "Length + Time does not compile" also passes
 // when no operator + exists at all.
-// static_assert(can_add<Length, Length>);
-// static_assert(can_sub<Length, Length>);
-// static_assert(std::is_same_v<sum_t<Length, Length>, Length>);
-// static_assert(!can_add<Length, Time>);
-// static_assert(!can_sub<Length, Time>);
-// static_assert(!can_add<Velocity, Acceleration>);
+static_assert(can_add<Length, Length>);
+static_assert(can_sub<Length, Length>);
+static_assert(std::is_same_v<sum_t<Length, Length>, Length>);
+static_assert(!can_add<Length, Time>);
+static_assert(!can_sub<Length, Time>);
+static_assert(!can_add<Velocity, Acceleration>);
+
+TEST(Dimension, SameDimensionAdditionAndSubtraction) {
+    const Length a{Real(5.0)};
+    const Length b{Real(3.0)};
+    EXPECT_EQ((a + b).Value(), Real(8.0));
+    EXPECT_EQ((a - b).Value(), Real(2.0));
+}
 
 // ---- STEP: * and / add and subtract exponents ----------------------------------------
 // static_assert(std::is_same_v<quotient_t<Length, Time>, Velocity>);

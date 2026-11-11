@@ -48,6 +48,21 @@ public:
      * @return The magnitude in SI base units.
      */
     [[nodiscard]] constexpr Real Value() const { return _value; }
+
+    // Operators
+    /**
+     * @brief Adds two quantities of the same dimension.
+     * @param rhs Quantity to add.
+     * @return Sum of both quantities.
+     */
+    [[nodiscard]] constexpr Dimension operator+(const Dimension& rhs) const;
+
+    /**
+     * @brief Subtracts two quantities of the same dimension.
+     * @param rhs Quantity to subtract.
+     * @return Difference of both quantities.
+     */
+    [[nodiscard]] constexpr Dimension operator-(const Dimension& rhs) const;
 };
 
 /// @brief Length (L^1)
@@ -62,5 +77,7 @@ using Velocity     = Dimension<Q<1>, Q<0>, Q<-1>>;
 using Acceleration = Dimension<Q<1>, Q<0>, Q<-2>>;
 /// @brief Force (L^1 M^1 T^-2)
 using Force        = Dimension<Q<1>, Q<1>, Q<-2>>;
-
 } // namespace kalon
+
+// Template definitions (STYLEGUIDE.md section 2).
+#include "Dimension.ipp"
