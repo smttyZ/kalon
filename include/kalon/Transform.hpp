@@ -1,30 +1,55 @@
+// Transform.hpp
+// kalon - Position and rotation
+// Copyright (C) 2025
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 #pragma once
 
+#include <kalon/Quaternion.hpp>
 #include <kalon/Real.hpp>
 #include <kalon/Vector3.hpp>
-#include <kalon/Quaternion.hpp>
 
 namespace kalon {
 
-/**
- * @brief Position + orientation of a rigid body. Rotation is kept normalized.
- */
-struct Transform {
-private:
-    Vector3 _position{};
-    Quaternion _rotation{};
+    /**
+     * @brief Position + orientation of a rigid body. Rotation is kept normalized.
+     */
+    struct Transform {
+    private:
+        Vector3 _position{};
+        Quaternion _rotation{};
 
-public:
-    // position
-    [[nodiscard]] Vector3 Position() const { return _position; }
-    void SetPosition(const Vector3& p) { _position = p; }
-    void Translate(const Vector3& delta) { _position += delta; }
+    public:
+        // position
+        [[nodiscard]] Vector3 Position() const {
+            return _position;
+        }
+        void SetPosition(const Vector3& p) {
+            _position = p;
+        }
+        void Translate(const Vector3& delta) {
+            _position += delta;
+        }
 
-    // rotation
-    [[nodiscard]] Quaternion Rotation() const { return _rotation; }
-    void SetRotation(const Quaternion& q) { _rotation = q.Normalized(); }
-    /// @brief Apply `delta` on top of the current rotation (world frame).
-    void Rotate(const Quaternion& delta) { _rotation = (delta * _rotation).Normalized(); }
-};
+        // rotation
+        [[nodiscard]] Quaternion Rotation() const {
+            return _rotation;
+        }
+        void SetRotation(const Quaternion& q) {
+            _rotation = q.Normalized();
+        }
+        /// @brief Apply `delta` on top of the current rotation (world frame).
+        void Rotate(const Quaternion& delta) {
+            _rotation = (delta * _rotation).Normalized();
+        }
+    };
 
 } // namespace kalon

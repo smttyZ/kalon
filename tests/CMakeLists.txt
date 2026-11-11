@@ -14,10 +14,10 @@ set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
 add_executable(kalon_tests
-    test_real.cpp
-    test_vector3.cpp
-    test_quaternion.cpp
-    test_dimension.cpp
+    DimensionTests.cpp
+    QuaternionTests.cpp
+    RealTests.cpp
+    Vector3Tests.cpp
 )
 target_link_libraries(kalon_tests PRIVATE kalon::kalon GTest::gtest_main)
 

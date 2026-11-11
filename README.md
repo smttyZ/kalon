@@ -11,7 +11,7 @@ The central idea is that **invalid numbers can't exist**. kalon's scalar type, `
 using namespace kalon;
 
 Vector3 r(Real(1.0), Real(0.0), Real(0.0));
-r.setUnit("m");
+r.SetUnit("m");
 
 auto q = Quaternion::FromAxisAngle(Vector3(Real(0.0), Real(0.0), Real(1.0)),
                                    Real(std::numbers::pi / 2));
@@ -80,7 +80,7 @@ In kalon, strongly typed means that **values that share a representation but mea
 Real a = 5.0;          // ✗ does not compile: no implicit double -> Real
 Real b(5.0);           // ✓ explicit construction
 double d = b;          // ✗ does not compile: no implicit Real -> double
-double e = b.value();  // ✓ explicit
+double e = b.Value();  // ✓ explicit
 ```
 
 Units are not there yet. Today they are runtime string tags, so `meters + seconds` compiles and produces a vector tagged `"mixed units"` that you have to check for yourself. A typo (`"meter"` vs `"m"`) looks the same as a genuine mismatch.
